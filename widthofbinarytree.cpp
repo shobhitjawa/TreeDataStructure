@@ -1,61 +1,57 @@
-#include<stdio.h>
-#include<iostream>
-#include<queue>
-#include<list>
-using namespace std;
-struct node{
-	int data;
-	struct node* left;
-	struct node* right;
-};
-node* createnode(int data)
-{
-	struct node* p;
-	p=new (struct node);
-	p->data=data;
-	p->left=NULL;
-	p->right=NULL;
-	return p;
-}
-void width(node* root)
-{
-
-    if (root == NULL)
-        return;
-    list<node*> l1;
-    l1.push_back(root);
-    node* curr = NULL;
-    int max = 0;
-    while (l1.empty()==false)                         //maximum width of binary tree.
-    {
-        int width = l1.size();
+ #include <bits/stdc++.h> 
+using namespace std;  
+struct Node{ 
+    int data; 
+    Node *left, *right; 
+};  
+Node *addNode(int data){ 
+    Node *temp = new Node(); 
+    temp->data = data; 
+    temp->left = temp->right = NULL; 
+}  
+void width(Node *root ){ 
+  if(root==NULL)
+  return ;
+  queue<Node*>q1;
+  q1.push(root);
+  int count=0;
+  struct Node* curr;
+  int max=0;
+  while(q1.empty()==false)
+  {
+   int width = q1.size();
         if (max < width)
            max = width;
-        while (width--)
-        {
-           curr = l1.front();
-           l1.pop_front();
-
-           if (curr->left)
-                l1.push_back(curr->left);
-
-           if (curr->right)
-                l1.push_back(curr->right);
-        }
-    }
-
-    cout << "Maximum width is " << max;
+  while(width>0)
+  {
+  curr=q1.front();
+  cout<<curr->data<<" ";
+  	q1.pop();
+  	if(curr->left!=NULL)                    //maximum width of binary tree.
+  	{
+  		q1.push(curr->left);
+	  }
+	  if(curr->right!=NULL)
+	  {
+	  	q1.push(curr->right);
+	  }
+	  width--;
+  } 
 }
-
-int main()
-{
-struct node* root=createnode(1);
-root->left=createnode(2);
-root->right=createnode(3);
-root->left->left=createnode(4);
-root->left->right=createnode(5);
-root->right->left=createnode(6);
-root->right->right=createnode(7);
-width(root);
-return 0;	
+cout<<endl<<max;
 }
+int main(){  
+    Node *root = addNode(1); 
+    root->left = addNode(2); 
+    root->left->left = addNode(4); 
+    root->left->right = addNode(5); 
+    root->left->left->right = addNode(2); 
+    root->right = addNode(3); 
+    root->right->right = addNode(8); 
+    root->right->right->left = addNode(6); 
+    root->right->right->right = addNode(7); 
+    int sum = 0; 
+    width(root); 
+   
+    return 0; 
+} 
